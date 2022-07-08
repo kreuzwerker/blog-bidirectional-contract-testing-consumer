@@ -2,6 +2,7 @@ package de.kreuzwerker.blogs.bidirectionalprovider;
 
 import de.kreuzwerker.blogs.bidirectionalprovider.exception.CustomException;
 import de.kreuzwerker.blogs.bidirectionalprovider.objects.Employee;
+import de.kreuzwerker.blogs.bidirectionalprovider.objects.EmployeesResult;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
@@ -35,11 +36,12 @@ public class DemoController {
     @ApiResponse(responseCode = "404", description = "Department not found"),
     @ApiResponse(responseCode = "500", description = "my brain! it's broken!")
   })
-  public ResponseEntity<List<Employee>> getMethodDemo(
+  public ResponseEntity<EmployeesResult> getMethodDemo(
       @PathVariable("departmentId") UUID departmentId) {
     try {
       List<Employee> employees = demoService.getEmployees(departmentId.toString());
-      return new ResponseEntity<>(employees, HttpStatus.OK);
+      return new ResponseEntity<>(
+          EmployeesResult.builder().employees(employees).build(), HttpStatus.OK);
     } catch (CustomException ce) {
       throw new ResponseStatusException(HttpStatus.resolve(ce.getCode()), ce.getMessage());
     }
