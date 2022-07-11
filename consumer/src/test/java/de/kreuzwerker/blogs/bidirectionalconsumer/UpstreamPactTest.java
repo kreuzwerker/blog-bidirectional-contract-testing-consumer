@@ -159,34 +159,34 @@ public class UpstreamPactTest {
 
   @Test
   @PactTestFor(pactMethod = "pactEmployeeCreateMinimalData", pactVersion = PactSpecVersion.V3)
-  void shouldCreateEmployeeWithFullData() {
+  void shouldCreateEmployeeMinimal() {
     Employee result = demoClient.postEmployee(departmentId, createEmployeeMinData()).getBody();
     assertThat(result).isNotNull();
   }
 
   @Pact(consumer = "pact-consumer")
   public RequestResponsePact pactEmployeeCreateFullData(PactDslWithProvider builder)
-    throws JsonProcessingException {
+      throws JsonProcessingException {
     DslPart responseBody =
-      newJsonBody(
-        (body) -> {
-          body.stringType("firstName", "Ellen");
-          body.stringType("lastName", "Ripley");
-          body.stringType("email", "ripley@weyland-yutani.com");
-          body.uuid("employeeId", UUID.randomUUID());
-        })
-        .build();
+        newJsonBody(
+                (body) -> {
+                  body.stringType("firstName", "Ellen");
+                  body.stringType("lastName", "Ripley");
+                  body.stringType("email", "ripley@weyland-yutani.com");
+                  body.uuid("employeeId", UUID.randomUUID());
+                })
+            .build();
 
     return builder
-      .given("the department exists")
-      .uponReceiving("a request to create a new employee")
-      .path("/demo-service/v1/departments/" + departmentId + "/employees")
-      .method("POST")
-      .body(new JSONObject(mapper.writeValueAsString(createEmployeeFullData())))
-      .willRespondWith()
-      .body(responseBody)
-      .status(201)
-      .toPact();
+        .given("the department exists")
+        .uponReceiving("a request to create a new employee")
+        .path("/demo-service/v1/departments/" + departmentId + "/employees")
+        .method("POST")
+        .body(new JSONObject(mapper.writeValueAsString(createEmployeeFullData())))
+        .willRespondWith()
+        .body(responseBody)
+        .status(201)
+        .toPact();
   }
 
   @Test
@@ -198,9 +198,9 @@ public class UpstreamPactTest {
 
   private Employee createEmployeeFullData() {
     Employee emp = new Employee();
-    emp.setFirstName("Michelle");
-    emp.setLastName("Yeoh");
-    emp.setEmail("michelle.yeoh@goat.com");
+    emp.setFirstName("Simone");
+    emp.setLastName("Giertz");
+    emp.setEmail("simone@bestrobots.com");
     return emp;
   }
 
