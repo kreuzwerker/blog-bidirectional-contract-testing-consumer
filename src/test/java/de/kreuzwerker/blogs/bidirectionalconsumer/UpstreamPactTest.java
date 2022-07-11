@@ -42,8 +42,7 @@ public class UpstreamPactTest {
 
   private DemoClient demoClient;
 
-  private final UUID departmentId1 = UUID.fromString("6a7e41b9-cacf-44f4-95b7-af1fdd60f3c8");
-  private final UUID departmentId2 = UUID.fromString("0fe073c6-e4e1-426f-a606-38ee43ce8471");
+  private final UUID departmentId = UUID.fromString("6a7e41b9-cacf-44f4-95b7-af1fdd60f3c8");
   private final UUID unknownDepartmentId = UUID.fromString("3535c952-1c46-4cc7-9908-c4a3a1e5c597");
 
   @Pact(consumer = "pact-consumer")
@@ -67,7 +66,7 @@ public class UpstreamPactTest {
     return builder
         .given("employees exist for department")
         .uponReceiving("a request to list all employees for department")
-        .path("/demo-service/v1/departments/" + departmentId1 + "/employees")
+        .path("/demo-service/v1/departments/" + departmentId + "/employees")
         .method("GET")
         .headers("Accept", MediaType.APPLICATION_JSON_VALUE)
         .willRespondWith()
@@ -79,7 +78,7 @@ public class UpstreamPactTest {
   @Test
   @PactTestFor(pactMethod = "pactEmployeeListing", pactVersion = PactSpecVersion.V3)
   void shouldGetEmployees() {
-    EmployeesListing resultListing = demoClient.getEmployees(departmentId1).getBody();
+    EmployeesListing resultListing = demoClient.getEmployees(departmentId).getBody();
     assertThat(resultListing).isNotNull();
     assertThat(resultListing.getEmployees().size()).isGreaterThan(0);
   }
@@ -148,7 +147,7 @@ public class UpstreamPactTest {
     return builder
         .given("the department exists")
         .uponReceiving("a request to create a new employee with minimal required data")
-        .path("/demo-service/v1/departments/" + departmentId1 + "/employees")
+        .path("/demo-service/v1/departments/" + departmentId + "/employees")
         .method("POST")
         .body(new JSONObject(mapper.writeValueAsString(createEmployeeMinData())))
         .willRespondWith()
@@ -160,7 +159,7 @@ public class UpstreamPactTest {
   @Test
   @PactTestFor(pactMethod = "pactEmployeeCreateMinimalData", pactVersion = PactSpecVersion.V3)
   void shouldCreateEmployeeMinimal() {
-    Employee result = demoClient.postEmployee(departmentId1, createEmployeeMinData()).getBody();
+    Employee result = demoClient.postEmployee(departmentId, createEmployeeMinData()).getBody();
     assertThat(result).isNotNull();
   }
 
@@ -179,8 +178,8 @@ public class UpstreamPactTest {
 
     return builder
         .given("the department exists")
-        .uponReceiving("a request to create a new employee")
-        .path("/demo-service/v1/departments/" + departmentId2 + "/employees")
+        .uponReceiving("a request to create a new employee with all data")
+        .path("/demo-service/v1/departments/" + departmentId + "/employees")
         .method("POST")
         .body(new JSONObject(mapper.writeValueAsString(createEmployeeFullData())))
         .willRespondWith()
@@ -192,7 +191,7 @@ public class UpstreamPactTest {
   @Test
   @PactTestFor(pactMethod = "pactEmployeeCreateFullData", pactVersion = PactSpecVersion.V3)
   void shouldCreateEmployee() {
-    Employee result = demoClient.postEmployee(departmentId2, createEmployeeFullData()).getBody();
+    Employee result = demoClient.postEmployee(departmentId, createEmployeeFullData()).getBody();
     assertThat(result).isNotNull();
   }
 
@@ -200,7 +199,7 @@ public class UpstreamPactTest {
     Employee emp = new Employee();
     emp.setFirstName("Simone");
     emp.setLastName("Giertz");
-    emp.setEmail("simone@bestrobots.com");
+    emp.setEmail("simone@best-robots.com");
     return emp;
   }
 
