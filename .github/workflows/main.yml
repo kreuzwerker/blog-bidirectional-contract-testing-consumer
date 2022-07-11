@@ -12,11 +12,9 @@ on:
 env:
   PACT_BROKER_BASE_URL: https://kreuzwerker-blog.pactflow.io
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
-  PACT_BROKER_PUBLISH_VERIFICATION_RESULTS: true
   VERSION: ${{ github.sha }}
-  GITHUB_REF: ${{ github.ref }}
+  GIT_REF: ${{ github.ref }}
   PACTICIPANT: "bidirectional-consumer"
-  pact_broker: https://kreuzwerker-blog.pactflow.io
 
 
 jobs:
@@ -42,4 +40,3 @@ jobs:
       - run: docker pull pactfoundation/pact-cli:latest
       - name: Can I deploy?
         run: GIT_BRANCH=${GIT_REF:11} make can_i_deploy
-  
