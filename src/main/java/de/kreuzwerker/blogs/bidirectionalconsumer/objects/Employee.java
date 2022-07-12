@@ -14,11 +14,8 @@ import lombok.Setter;
 public class Employee {
 
   @NotNull private String firstName;
-
   private String lastName;
-
   @NotNull private String email;
-
   @Schema(type = "string", format = "uuid")
   private String employeeId;
 }
