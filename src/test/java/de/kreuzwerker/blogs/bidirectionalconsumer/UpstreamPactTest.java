@@ -19,6 +19,7 @@ import de.kreuzwerker.blogs.bidirectionalconsumer.objects.EmployeesListing;
 import java.util.UUID;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,11 +110,12 @@ public class UpstreamPactTest {
     assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
+  @Disabled
   @Pact(consumer = "pact-consumer")
   public RequestResponsePact pactEmployeeListingBadRequest(PactDslWithProvider builder) {
     return builder
         .given("the user does something stupid")
-        .uponReceiving("and sends a nonsense request")
+        .uponReceiving("a nonsense request")
         .path("/demo-service/v1/departments/" + unknownDepartmentId + "/employees")
         .method("GET")
         .headers("Accept", MediaType.APPLICATION_JSON_VALUE)
@@ -122,6 +124,7 @@ public class UpstreamPactTest {
         .toPact();
   }
 
+  @Disabled
   @Test
   @PactTestFor(pactMethod = "pactEmployeeListingBadRequest", pactVersion = PactSpecVersion.V3)
   void shouldReturnBadRequestForEmployees() {
@@ -133,6 +136,7 @@ public class UpstreamPactTest {
     assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
+  @Disabled
   @Pact(consumer = "pact-consumer")
   public RequestResponsePact pactEmployeeCreateMinimalData(PactDslWithProvider builder)
       throws JsonProcessingException {
@@ -157,6 +161,7 @@ public class UpstreamPactTest {
         .toPact();
   }
 
+  @Disabled
   @Test
   @PactTestFor(pactMethod = "pactEmployeeCreateMinimalData", pactVersion = PactSpecVersion.V3)
   void shouldCreateEmployeeMinimal() {
