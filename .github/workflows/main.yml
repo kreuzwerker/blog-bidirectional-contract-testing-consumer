@@ -14,7 +14,7 @@ env:
   PACT_BROKER_TOKEN: ${{ secrets.PACTFLOW_TOKEN }}
   VERSION: ${{ github.sha }}
   GIT_REF: ${{ github.ref }}
-  PACTICIPANT: "bidirectional-consumer"
+  PACTICIPANT: "pact-consumer"
 
 
 jobs:
