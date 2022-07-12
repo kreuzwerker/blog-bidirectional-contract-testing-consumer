@@ -17,5 +17,5 @@ public class Employee {
   private String lastName;
   @NotNull private String email;
   @Schema(type = "string", format = "uuid")
-  private String employeeId;
+  private String employeeId = "";
 }
