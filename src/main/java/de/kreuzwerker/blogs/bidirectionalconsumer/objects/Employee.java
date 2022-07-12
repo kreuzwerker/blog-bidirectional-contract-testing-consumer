@@ -1,5 +1,7 @@
 package de.kreuzwerker.blogs.bidirectionalconsumer.objects;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
@@ -17,5 +19,6 @@ public class Employee {
 
   @NotNull private String email;
 
-  private UUID employeeId;
+  @Schema(type = "string", format = "uuid")
+  private String employeeId;
 }
