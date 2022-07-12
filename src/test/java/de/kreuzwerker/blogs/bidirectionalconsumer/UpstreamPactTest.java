@@ -200,6 +200,7 @@ public class UpstreamPactTest {
     emp.setFirstName("Simone");
     emp.setLastName("Giertz");
     emp.setEmail("simone@best-robots.com");
+    emp.setEmployeeId(null);
     return emp;
   }
 
@@ -207,6 +208,7 @@ public class UpstreamPactTest {
     Employee emp = new Employee();
     emp.setFirstName("Michelle");
     emp.setEmail("michelle.yeoh@goat.com");
+    emp.setEmployeeId(null);
     return emp;
   }
 
