@@ -19,9 +19,7 @@ env:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup jdk-17
@@ -33,7 +31,7 @@ jobs:
       run: mvn clean verify -B
     - name: Publish pacts
       uses: roycdiscovery/pact-publish-pactfiles-action@v1.0
-      with:
+      env:
         pactfiles: target/pacts
         application_name: ${{ env.PACTICIPANT }}
         version: ${{ env.VERSION }}
