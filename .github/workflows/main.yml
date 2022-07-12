@@ -36,7 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v2
-      - run: docker pull pactfoundation/pact-cli:latest
-      - name: Can I deploy?
-        run: GIT_BRANCH=${GIT_REF:11} make can_i_deploy
+      - uses: pactflow/actions/can-i-deploy@v0.0.2
+        env:
+          to: "production"
+          pact_broker: ${{ env.PACT_BROKER_BASE_URL }}
+          pact_broker_token: ${{ env.PACT_BROKER_TOKEN }}
+          application_name: ${{ env.PACTICIPANT }}
+          version: ${{ env.VERSION }}
